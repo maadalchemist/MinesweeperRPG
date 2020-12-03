@@ -13,4 +13,4 @@ This project is a version of minesweeper where you control an actual character w
       * Mined
       * Mined Bomb
 ### Vector Map Structure
-![vectorStructure](![icon](https://github.com/maadalchemist/MinesweeperRPG/blob/main/doc/icon.png?raw=true))
+![vectorStructure](https://github.com/maadalchemist/MinesweeperRPG/blob/main/doc/worldVectorStructure.png?raw=true)
