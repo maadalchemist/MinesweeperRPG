@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://effects/rich_water/transparent.png" type="Texture" id=1]
+[ext_resource path="res://effects/rich_water/rich_water.shader" type="Shader" id=2]
+[ext_resource path="res://effects/rich_water/rich_water.gd" type="Script" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 2 )
+shader_param/dark_color_rgb = Vector3( 0, 105, 170 )
+shader_param/light_color_rgb = Vector3( 0, 205, 249 )
+shader_param/OCTAVES = 4
+shader_param/noise_time_factor = 0.5
+shader_param/noise_factor = 20
+
+[node name="RichWater" type="Sprite"]
+material = SubResource( 1 )
+texture = ExtResource( 1 )
+script = ExtResource( 3 )

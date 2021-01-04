@@ -19,19 +19,23 @@ enum {
 var minefield = {}
 var verbose_minefield = {}
 
-onready var GrassTileset = $GrassTileset
 onready var NumberTileset = $NumberTileset
+onready var Camera2D = $Camera2D
 
 
 func _ready():
 	randomize()
 	
-	for i in range(-10, 10):
-		for j in range(-10, 10):
-			generate_mine_at(Vector2(i, j))
+	for i in range(-5, 5):
+		for j in range(-5, 5):
+			minefield[Vector2(i, j)] = MINE
 
-func _process(delta):
-	pass
+func _physics_process(delta):
+	var camera_position = Camera2D.get_camera_position()
+	var camera_grid_position = Vector2(int(camera_position.x / 16), int(camera_position.y / 16))
+	for i in range(-12, 12):
+		for j in range(-8, 8):
+			generate_mine_at(Vector2(i + camera_grid_position.x, j + camera_grid_position.y))
 
 func generate_mine_at(pos):
 	if pos in minefield:
@@ -39,7 +43,8 @@ func generate_mine_at(pos):
 	var mine_seed = randi() % 100
 	if mine_seed <= mine_chance:
 		new_mine(pos)
-	return
+	else:
+		minefield[pos] = SAFE
 
 func new_mine(pos):
 	minefield[pos] = MINE
