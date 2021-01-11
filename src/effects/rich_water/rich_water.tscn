@@ -6,11 +6,6 @@
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
-shader_param/dark_color_rgb = Vector3( 0, 105, 170 )
-shader_param/light_color_rgb = Vector3( 0, 205, 249 )
-shader_param/OCTAVES = 4
-shader_param/noise_time_factor = 0.5
-shader_param/noise_factor = 20
 
 [node name="RichWater" type="Sprite"]
 material = SubResource( 1 )
