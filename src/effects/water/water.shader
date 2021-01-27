@@ -22,7 +22,7 @@ vec2 random2( vec2 p ) {
 void fragment() {
 	vec2 position = (global_position + UV * scale) / tile_scale;
 	vec2 tile = floor(position);
-	vec2 tile_position = fract(position);
+	vec2 tile_position = floor(fract(position)*16.0)/16.0;
 	
 	float minimum_distance = 1.0; 
 	
