@@ -1,14 +1,32 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
+[ext_resource path="res://effects/water/Water.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
 [ext_resource path="res://tilesets/NumberTileset.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Walker.tscn" type="PackedScene" id=4]
 
+[sub_resource type="GDScript" id=1]
+script/source = "extends Camera2D
+
+
+# Declare member variables here. Examples:
+var water = $Water
+
+func _process(delta):
+	water.position = 
+"
+
 [node name="World" type="Node2D"]
+position = Vector2( -1, 0 )
 script = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+script = SubResource( 1 )
+
+[node name="Water" parent="." instance=ExtResource( 1 )]
+scale = Vector2( 320, 180 )
+centered = true
 
 [node name="NumberTileset" parent="." instance=ExtResource( 3 )]
 cell_size = Vector2( 16, 16 )
@@ -18,3 +36,4 @@ visible = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Walker"]
 remote_path = NodePath("../../Camera2D")
+[connection signal="item_rect_changed" from="Camera2D" to="Water" method="move"]
