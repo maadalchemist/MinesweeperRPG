@@ -7,9 +7,13 @@
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
 shader_param/dark_color = Color( 0, 0.411765, 0.666667, 1 )
+shader_param/dark_threshold = 0.3
 shader_param/light_color = Color( 0.0470588, 0.945098, 1, 1 )
-shader_param/draw_grid = null
-shader_param/draw_dot = null
+shader_param/light_threshold = 0.7
+shader_param/draw_grid = false
+shader_param/draw_dot = false
+shader_param/cell_shade = false
+shader_param/pixellate = null
 shader_param/global_position = Vector2( 0, 0 )
 shader_param/tile_scale = Vector2( 16, 16 )
 shader_param/scale = Vector2( 320, 180 )

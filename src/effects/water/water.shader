@@ -1,10 +1,14 @@
 shader_type canvas_item;
 
 uniform vec4 dark_color : hint_color;
+uniform float dark_threshold = .3;
 uniform vec4 light_color : hint_color;
+uniform float light_threshold = .7;
 
 uniform bool draw_grid;
 uniform bool draw_dot;
+uniform bool cell_shade;
+uniform bool pixellate;
 
 uniform vec2 global_position;
 
@@ -22,7 +26,8 @@ vec2 random2( vec2 p ) {
 void fragment() {
 	vec2 position = (global_position + UV * scale) / tile_scale;
 	vec2 tile = floor(position);
-	vec2 tile_position = floor(fract(position)*16.0)/16.0;
+	vec2 tile_position = fract(position);
+	if (pixellate) { tile_position = floor(tile_position * 16.0) / 16.0; }
 	
 	float minimum_distance = 1.0; 
 	
@@ -52,7 +57,19 @@ void fragment() {
 	COLOR = vec4(vec3(pow(minimum_distance, 2.5)), 1.0);
 	
 	// convert to water colors
-	COLOR = mix(dark_color, light_color, COLOR);
+	if (!cell_shade) {
+		COLOR = mix(dark_color, light_color, COLOR);
+	} else {
+		if (COLOR.b < dark_threshold) {
+			COLOR = dark_color;
+		} else if (COLOR.b < light_threshold) {
+			COLOR = light_color;
+		} else {
+			COLOR = vec4(1.0);
+		}
+	}
+	
+	
 	
 	// Draw cell center
 	COLOR += (1.-step(.02, minimum_distance)) * float(draw_dot);

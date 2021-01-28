@@ -21,6 +21,7 @@ var verbose_minefield = {}
 
 onready var NumberTileset = $NumberTileset
 onready var Camera2D = $Camera2D
+onready var water = $Water
 
 
 func _ready():
@@ -36,6 +37,11 @@ func _physics_process(delta):
 	for i in range(-12, 12):
 		for j in range(-8, 8):
 			generate_mine_at(Vector2(i + camera_grid_position.x, j + camera_grid_position.y))
+
+func _process(delta):
+	water.position = Camera2D.position;
+	water.material.set_shader_param("global_position", water.get_global_position())
+	water.material.set_shader_param("scale", water.scale)
 
 func generate_mine_at(pos):
 	if pos in minefield:
