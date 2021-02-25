@@ -10,7 +10,6 @@ position = Vector2( -1, 0 )
 script = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 6.56732, 16.1151 )
 current = true
 
 [node name="Water" parent="." instance=ExtResource( 1 )]
@@ -23,8 +22,6 @@ cell_size = Vector2( 16, 16 )
 [node name="Ship" parent="." instance=ExtResource( 5 )]
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Ship"]
-position = Vector2( 6.56732, 16.1151 )
 remote_path = NodePath("../../Camera2D")
 use_global_coordinates = false
-update_rotation = false
 [connection signal="item_rect_changed" from="Camera2D" to="Water" method="move"]
