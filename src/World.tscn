@@ -23,5 +23,4 @@ cell_size = Vector2( 16, 16 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Ship"]
 remote_path = NodePath("../../Camera2D")
-use_global_coordinates = false
 [connection signal="item_rect_changed" from="Camera2D" to="Water" method="move"]
