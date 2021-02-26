@@ -11,6 +11,7 @@ export var acc = 2
 export var fric = .5
 export var max_speed = 50;
 
+
 func _physics_process(delta):
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -28,3 +29,4 @@ func _physics_process(delta):
 		velocity = velocity.move_toward(-sign(input_vector.y) * max_speed * Vector2(cos(rotation), sin(rotation)), acc)
 	velocity = velocity.move_toward(Vector2.ZERO, fric)
 	move_and_slide(velocity)
+	

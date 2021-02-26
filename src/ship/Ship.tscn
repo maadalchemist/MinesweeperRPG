@@ -6,6 +6,6 @@
 [node name="Ship" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="s_ship" type="Sprite" parent="."]
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
