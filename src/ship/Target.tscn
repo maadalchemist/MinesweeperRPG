@@ -1,9 +1,26 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ship/target.gd" type="Script" id=1]
 [ext_resource path="res://ship/target.png" type="Texture" id=2]
 
-[node name="Target" type="Sprite"]
-texture = ExtResource( 2 )
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 3.0
+} ]
+
+[node name="Target" type="AnimatedSprite"]
+frames = SubResource( 3 )
+playing = true
 centered = false
 script = ExtResource( 1 )

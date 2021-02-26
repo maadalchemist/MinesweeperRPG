@@ -7,9 +7,9 @@ var rot_velocity = 0;
 export var rot_acc = .002
 export var rot_fric = .002
 export var max_rot_velocity = .05
-export var acc = 2
-export var fric = .5
-export var max_speed = 50;
+export var acc = .02
+export var fric = .7
+export var max_speed = 70;
 
 
 func _physics_process(delta):
@@ -26,7 +26,8 @@ func _physics_process(delta):
 	
 	# velocity input
 	if input_vector.y != 0:
-		velocity = velocity.move_toward(-sign(input_vector.y) * max_speed * Vector2(cos(rotation), sin(rotation)), acc)
+		velocity += -sign(input_vector.y) * max_speed * Vector2(cos(rotation), sin(rotation)) * acc
 	velocity = velocity.move_toward(Vector2.ZERO, fric)
+	velocity = velocity.clamped(max_speed)
 	move_and_slide(velocity)
 	
