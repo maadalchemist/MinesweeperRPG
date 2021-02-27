@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://effects/shader_base.png" type="Texture" id=1]
+[ext_resource path="res://effects/grid/grid.gd" type="Script" id=2]
+[ext_resource path="res://effects/grid/grid.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 3 )
+shader_param/color = Color( 1, 1, 1, 0.54902 )
+shader_param/global_position = Vector2( 0, 0 )
+shader_param/scale = Vector2( 320, 180 )
+
+[node name="Grid" type="Sprite"]
+material = SubResource( 1 )
+texture = ExtResource( 1 )
+centered = false
+script = ExtResource( 2 )
+[connection signal="item_rect_changed" from="." to="." method="update_shader_info"]
