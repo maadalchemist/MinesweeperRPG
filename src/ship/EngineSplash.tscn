@@ -15,9 +15,9 @@ orbit_velocity_random = 0.0
 hue_variation_random = 0.01
 
 [node name="engine_splash" type="Particles2D"]
-position = Vector2( -17.5, 0 )
+emitting = false
 amount = 200
-lifetime = 0.5
+lifetime = 0.01
 randomness = 1.0
 local_coords = false
 process_material = SubResource( 1 )

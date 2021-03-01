@@ -39,5 +39,4 @@ update_rotation = false
 
 [node name="target" parent="." instance=ExtResource( 4 )]
 position = Vector2( 36, 0 )
-frame = 1
 [connection signal="item_rect_changed" from="Camera2D" to="Water" method="move"]

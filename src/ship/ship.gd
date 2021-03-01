@@ -12,9 +12,10 @@ export var max_rot_velocity = .05
 export var acc = .02
 export var fric = .7
 export var max_speed = 70
-export var max_splash_amount = 200
+export var max_splash_amount = .5
 
 signal splash_count
+signal turn
 
 onready var engine_sound = $engine_sound
 
@@ -27,8 +28,10 @@ func _physics_process(delta):
 	# rotational input
 	if input_vector.x != 0:
 		rot_velocity = move_toward(rot_velocity, max_rot_velocity * sign(input_vector.x), .0003 + (acc * (velocity.length() / (max_speed * 5))))
+		emit_signal("turn_direction",input_vector.x)
 	else:
 		rot_velocity = move_toward(rot_velocity, 0, rot_fric)
+		emit_signal("turn_direction",0)
 	rotation += rot_velocity
 	
 	# velocity input
@@ -39,11 +42,12 @@ func _physics_process(delta):
 	move_and_slide(velocity)
 	
 	if input_vector.y != 0:
-		engine_sound.pitch_scale = move_toward(engine_sound.pitch_scale, 5, .05)
-		splash_amount = move_toward(splash_amount, max_splash_amount, 2)
+		engine_sound.pitch_scale = move_toward(engine_sound.pitch_scale, 3, .05)
+		splash_amount = move_toward(splash_amount, max_splash_amount, .005)
 	else:
 		engine_sound.pitch_scale = move_toward(engine_sound.pitch_scale, 1, .1)
-		splash_amount = move_toward(splash_amount, 0, 4)
+		splash_amount = move_toward(splash_amount, 0, .02)
 	if old_splash_amount != splash_amount:
 		emit_signal("splash_count", splash_amount)
 	old_splash_amount = splash_amount
+	

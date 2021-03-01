@@ -16,6 +16,7 @@ script = ExtResource( 2 )
 position = Vector2( -17.5, -2.5 )
 
 [node name="engine_splash2" parent="." instance=ExtResource( 4 )]
+position = Vector2( -17.5, 0 )
 
 [node name="engine_splash3" parent="." instance=ExtResource( 4 )]
 position = Vector2( -17.5, 2.5 )
@@ -31,3 +32,9 @@ shape = SubResource( 1 )
 [node name="engine_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 autoplay = true
+[connection signal="splash_count" from="." to="engine_splash" method="_on_Ship_splash_count"]
+[connection signal="splash_count" from="." to="engine_splash2" method="_on_Ship_splash_count"]
+[connection signal="splash_count" from="." to="engine_splash3" method="_on_Ship_splash_count"]
+[connection signal="turn" from="." to="engine_splash" method="_on_Ship_turn"]
+[connection signal="turn" from="." to="engine_splash2" method="_on_Ship_turn"]
+[connection signal="turn" from="." to="engine_splash3" method="_on_Ship_turn"]
