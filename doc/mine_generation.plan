@@ -1,0 +1,7 @@
+storage mediums:
+  enum tile_shape     -     way to label mines as mines
+  Dictionary minefield     -     actual storage of tile data
+  Dictionary minefield_chunks     -     16x16 groups of tiles
+
+at start:
+  
