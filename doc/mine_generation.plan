@@ -1,7 +1,25 @@
 storage mediums:
   enum tile_shape     -     way to label mines as mines
   Dictionary minefield     -     actual storage of tile data
+  Dictionary visible_minefield     -     list of what times have been revealed
   Dictionary minefield_chunks     -     16x16 groups of tiles
 
 at start:
+  generate (0,0) (0,-1) (-1,-1) (-1,0) 
   
+generating red chunk:
+  if pos_chunk is not in minefield_chunks:
+    add it as red
+  if pos_chunk in minefield_chunks is yellow:
+    break
+  place mines in minefield (based off of world seed compared to chunk seed)
+  for every placed mine
+    increment every surrounding tile (except for mines)
+  set chunk to yellow
+
+generate_chunk(Vector2 pos_chunk):
+  if pos_chunk is not in minefield_chunks or is red:
+    generate_red(pos_chunk)
+  for surrounding chunks:
+    generate_red(pos_chunk)
+  set green
