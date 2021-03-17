@@ -44,8 +44,8 @@ func _ready():
 	var camera_grid_pos = Vector2(int(camera_position.x / 16), int(camera_position.y / 16))
 	var camera_chunk_pos = camera_grid_pos / 16
 	
-	for i in range(-2,1):
-		for j in range(-2,1):
+	for i in range(-2,2):
+		for j in range(-2,2):
 			generate_chunk(Vector2(i,j))
 
 func _process(delta):
