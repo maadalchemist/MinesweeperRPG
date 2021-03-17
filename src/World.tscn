@@ -14,7 +14,7 @@ debug_print_minefield = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 4, 4 )
+zoom = Vector2( 2, 2 )
 
 [node name="Water" parent="." instance=ExtResource( 1 )]
 scale = Vector2( 320, 180 )
@@ -41,5 +41,4 @@ update_rotation = false
 
 [node name="target" parent="." instance=ExtResource( 4 )]
 position = Vector2( 36, 0 )
-frame = 1
 [connection signal="item_rect_changed" from="Camera2D" to="Water" method="move"]
