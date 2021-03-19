@@ -15,7 +15,7 @@ export var max_speed = 70
 export var max_splash_amount = .5
 
 signal splash_count # for particle count
-signal turn # for particle angles
+#signal turn # for particle angles
 
 onready var engine_sound = $engine_sound
 
@@ -29,10 +29,10 @@ func _physics_process(delta):
 	# rotational input
 	if input_vector.x != 0:
 		rot_velocity = move_toward(rot_velocity, max_rot_velocity * sign(input_vector.x), .0003 + (acc * (velocity.length() / (max_speed * 5))))
-		emit_signal("turn_direction",input_vector.x) 
+#		emit_signal("turn_direction",input_vector.x) 
 	else:
 		rot_velocity = move_toward(rot_velocity, 0, rot_fric)
-		emit_signal("turn_direction",0)
+#		emit_signal("turn_direction",0)
 	rotation += rot_velocity
 	
 	# velocity input

@@ -35,6 +35,3 @@ autoplay = true
 [connection signal="splash_count" from="." to="engine_splash" method="_on_Ship_splash_count"]
 [connection signal="splash_count" from="." to="engine_splash2" method="_on_Ship_splash_count"]
 [connection signal="splash_count" from="." to="engine_splash3" method="_on_Ship_splash_count"]
-[connection signal="turn" from="." to="engine_splash" method="_on_Ship_turn"]
-[connection signal="turn" from="." to="engine_splash2" method="_on_Ship_turn"]
-[connection signal="turn" from="." to="engine_splash3" method="_on_Ship_turn"]
