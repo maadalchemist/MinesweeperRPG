@@ -3,6 +3,7 @@ extends Node2D
 
 export var mine_threshold = -0.20
 export var debug_print_minefield = false
+export var stable_seed = false
 
 enum {
 	SAFE,
@@ -46,12 +47,15 @@ onready var grid = $Grid
 onready var cam2D = $Camera2D
 onready var water = $Water
 onready var target = $target
+onready var sfx_splash1 = $audio/splash1
+onready var sfx_splash2 = $audio/splash2
 
 
 func _ready():
-	randomize()
+	if not stable_seed:
+		randomize()
 	noise = OpenSimplexNoise.new()
-#	noise.seed = randi()
+	noise.seed = randi()
 	noise.octaves = 100
 	noise.period = 1.0
 	noise.persistence = 0.8
@@ -75,6 +79,7 @@ func _ready():
 	
 	old_cam_pos = cam_pos
 	old_cam_chunk_pos = cam_chunk_pos
+
 
 func _process(delta):
 	cam_pos = cam2D.get_camera_position()
@@ -101,7 +106,11 @@ func _process(delta):
 	old_cam_chunk_pos = cam_chunk_pos\
 	
 	if Input.is_action_just_pressed("reveal"):
-		reveal_tile(target.getTile())
+		if reveal_tile(target.getTile()) != MINE:
+			if randi() % 2 < 1:
+				sfx_splash1.play()
+			else:
+				sfx_splash2.play()
 	
 	# debug commands
 	if Input.get_action_strength("debug_reveal_all"):
@@ -123,6 +132,7 @@ func generate_chunk(chunk):
 	if minefield_chunks[chunk] == YELLOW:
 		generate_chunk_yellow(chunk)
 
+
 # first chunk generation step - does not check for proper edge tile states
 func generate_chunk_red(chunk):
 	if not chunk in minefield_chunks:
@@ -142,6 +152,7 @@ func generate_chunk_red(chunk):
 	
 	minefield_chunks[chunk] = YELLOW
 
+
 #second chunk generation step - generates edge chunks
 func generate_chunk_yellow(chunk):
 	if not chunk in minefield_chunks or minefield_chunks[chunk] == RED:
@@ -160,6 +171,7 @@ func generate_chunk_yellow(chunk):
 				number_tileset.set_cell(pos.x, pos.y, 0, false, false, false, Vector2(tile_at(pos),0))
 	
 	minefield_chunks[chunk] = GREEN
+
 
 func reveal_tile(pos):
 	if not pos in visible_field:
@@ -193,14 +205,18 @@ func reveal_tile(pos):
 	fog_of_war.set_cell(pos.x, pos.y, 0, false, false, false, Vector2(0,0))
 	
 	visible_field[pos] == REVEALED
+	return count
+
 
 func explode():
 	pass
+
 
 func tile_at(pos):
 	if not pos in minefield:
 		generate_chunk(pos/16)
 	return minefield[pos]
+
 
 func debug_reveal_all():
 	cam2D.zoom = Vector2(4,4)

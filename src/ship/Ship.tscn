@@ -31,7 +31,8 @@ shape = SubResource( 1 )
 
 [node name="engine_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+volume_db = -10.0
 autoplay = true
 [connection signal="splash_count" from="." to="engine_splash" method="_on_Ship_splash_count"]
-[connection signal="splash_count" from="." to="engine_splash2" method="_on_Ship_splash_count"]
 [connection signal="splash_count" from="." to="engine_splash3" method="_on_Ship_splash_count"]
+[connection signal="splash_count" from="." to="engine_splash2" method="_on_Ship_splash_count"]
