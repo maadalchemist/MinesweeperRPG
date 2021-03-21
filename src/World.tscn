@@ -58,6 +58,7 @@ remote_path = NodePath("../../target_guide")
 
 [node name="target" parent="." instance=ExtResource( 4 )]
 position = Vector2( 36, 0 )
+frame = 1
 
 [node name="audio" type="Node" parent="."]
 

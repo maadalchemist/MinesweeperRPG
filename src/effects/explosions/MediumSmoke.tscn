@@ -1,0 +1,81 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://effects/explosions/medium_smoke.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 47, 47 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 47, 0, 47, 47 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 94, 0, 47, 47 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 141, 0, 47, 47 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 188, 0, 47, 47 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 235, 0, 47, 47 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), null ],
+"loop": false,
+"name": "medium_smoke",
+"speed": 25.0
+} ]
+
+[sub_resource type="GDScript" id=8]
+script/source = "extends AnimatedSprite
+
+var sfx_list = {
+	0: preload(\"res://effects/explosions/sfx/sfx_explosion1.tres\"),
+	1: preload(\"res://effects/explosions/sfx/sfx_explosion2.tres\"),
+	2: preload(\"res://effects/explosions/sfx/sfx_explosion3.tres\"),
+	3: preload(\"res://effects/explosions/sfx/sfx_explosion4.tres\"),
+	4: preload(\"res://effects/explosions/sfx/sfx_explosion5.tres\"),
+	5: preload(\"res://effects/explosions/sfx/sfx_explosion6.tres\"),
+	6: preload(\"res://effects/explosions/sfx/sfx_explosion7.tres\"),
+}
+var sfx_finished = false
+var ani_finished = false
+
+onready var sfx = $sfx
+
+
+func _ready():
+	sfx.stream = sfx_list[randi() % 7]
+	play()
+	sfx.play()
+
+
+func _process(delta):
+	if ani_finished and sfx_finished:
+		queue_free()
+
+
+func _on_animation_finished():
+	ani_finished = true
+
+
+func _on_sfx_finished():
+	sfx_finished = true
+"
+
+[node name="MediumSmoke" type="AnimatedSprite"]
+frames = SubResource( 7 )
+animation = "medium_smoke"
+script = SubResource( 8 )
+
+[node name="sfx" type="AudioStreamPlayer" parent="."]
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
+[connection signal="finished" from="sfx" to="." method="_on_sfx_finished"]

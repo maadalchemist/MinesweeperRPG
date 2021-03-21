@@ -106,11 +106,13 @@ func _process(delta):
 	old_cam_chunk_pos = cam_chunk_pos\
 	
 	if Input.is_action_just_pressed("reveal"):
-		if reveal_tile(target.getTile()) != MINE:
-			if randi() % 2 < 1:
-				sfx_splash1.play()
-			else:
-				sfx_splash2.play()
+		if not target.getTile() in visible_field:
+			reveal_tile(target.getTile())
+			if tile_at(target.getTile()) != MINE:
+				if randi() % 2 < 1:
+					sfx_splash1.play()
+				else:
+					sfx_splash2.play()
 	
 	# debug commands
 	if Input.get_action_strength("debug_reveal_all"):
@@ -209,7 +211,8 @@ func reveal_tile(pos):
 
 
 func explode():
-	pass
+	var mine_pos = target.getTile()
+
 
 
 func tile_at(pos):

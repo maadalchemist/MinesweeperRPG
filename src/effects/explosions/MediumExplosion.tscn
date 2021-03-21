@@ -1,0 +1,97 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://effects/explosions/medium_explosion.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 57, 57 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 57, 0, 57, 57 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 114, 0, 57, 57 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 171, 0, 57, 57 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 228, 0, 57, 57 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 285, 0, 57, 57 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 342, 0, 57, 57 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 399, 0, 57, 57 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 456, 0, 57, 57 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 513, 0, 57, 57 )
+
+[sub_resource type="SpriteFrames" id=11]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), null ],
+"loop": false,
+"name": "medium_explosion",
+"speed": 25.0
+} ]
+
+[sub_resource type="GDScript" id=12]
+script/source = "extends AnimatedSprite
+
+var sfx_list = {
+	0: preload(\"res://effects/explosions/sfx/sfx_explosion1.tres\"),
+	1: preload(\"res://effects/explosions/sfx/sfx_explosion2.tres\"),
+	2: preload(\"res://effects/explosions/sfx/sfx_explosion3.tres\"),
+	3: preload(\"res://effects/explosions/sfx/sfx_explosion4.tres\"),
+	4: preload(\"res://effects/explosions/sfx/sfx_explosion5.tres\"),
+	5: preload(\"res://effects/explosions/sfx/sfx_explosion6.tres\"),
+	6: preload(\"res://effects/explosions/sfx/sfx_explosion7.tres\"),
+}
+var sfx_finished = false
+var ani_finished = false
+
+onready var sfx = $sfx
+
+
+func _ready():
+	sfx.stream = sfx_list[randi() % 7]
+	play()
+	sfx.play()
+
+
+func _process(delta):
+	if ani_finished and sfx_finished:
+		queue_free()
+
+
+func _on_animation_finished():
+	ani_finished = true
+
+
+func _on_sfx_finished():
+	sfx_finished = true
+"
+
+[node name="MediumExplosion" type="AnimatedSprite"]
+frames = SubResource( 11 )
+animation = "medium_explosion"
+script = SubResource( 12 )
+
+[node name="sfx" type="AudioStreamPlayer" parent="."]
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
+[connection signal="finished" from="sfx" to="." method="_on_sfx_finished"]
