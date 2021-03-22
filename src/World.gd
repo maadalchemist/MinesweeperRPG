@@ -40,15 +40,26 @@ var old_cam_pos
 var cam_grid_pos
 var cam_chunk_pos
 var old_cam_chunk_pos
+var exploding = false
+
+var explosions = {
+	0: preload("res://effects/explosions/BigExplosion.tscn"),
+	1: preload("res://effects/explosions/MediumExplosion.tscn"),
+	2: preload("res://effects/explosions/MediumSmoke.tscn"),
+}
+const BIG_EXPLOSION = preload("res://effects/explosions/BigExplosion.tscn")
+const MED_EXPLOSION = preload("res://effects/explosions/MediumExplosion.tscn")
+const MED_SMOKE = preload("res://effects/explosions/MediumSmoke.tscn")
 
 onready var number_tileset = $NumberTileset
 onready var fog_of_war = $FogOfWar
 onready var grid = $Grid
 onready var cam2D = $Camera2D
 onready var water = $Water
-onready var target = $target
+onready var target = $Target
 onready var sfx_splash1 = $audio/splash1
 onready var sfx_splash2 = $audio/splash2
+onready var exploding_timer = $ExplodingTimer
 
 
 func _ready():
@@ -113,6 +124,12 @@ func _process(delta):
 					sfx_splash1.play()
 				else:
 					sfx_splash2.play()
+	
+	if exploding:
+		$WhiteTransition.position = cam2D.position
+		if $WhiteTransition.modulate.a < 1:
+			$WhiteTransition.modulate.a += .005
+		print($WhiteTransition.modulate.a)
 	
 	# debug commands
 	if Input.get_action_strength("debug_reveal_all"):
@@ -211,8 +228,12 @@ func reveal_tile(pos):
 
 
 func explode():
-	var mine_pos = target.getTile()
-
+	exploding = true
+	exploding_timer.start()
+	var mine_pos = (target.getTile() * 16) + Vector2(8,8)
+	var explosion = explosions[randi() % 3].instance()
+	add_child(explosion)
+	explosion.position = mine_pos + Vector2(8,8)
 
 
 func tile_at(pos):
@@ -226,3 +247,12 @@ func debug_reveal_all():
 	for pos in minefield:
 		if minefield[pos] == MINE:
 			number_tileset.set_cell(pos.x, pos.y, 0, false, false, false, Vector2(tile_at(pos),0))
+
+
+func _ExplodingTimer():
+	var mine_pos = (target.getTile() * 16) + Vector2(8,8)
+	var explosion = explosions[randi() % 3].instance()
+	add_child(explosion)
+	var rand_x = pow(.1 * (randi() % 64 - 32),3)
+	var rand_y = pow(.1 * (randi() % 64 - 32),3)
+	explosion.position = mine_pos + Vector2(rand_x, rand_y)
