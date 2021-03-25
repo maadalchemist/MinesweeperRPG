@@ -16,7 +16,6 @@ enum {
 	SEVEN,
 	EIGHT,
 	MINE,
-	DEFUSED,
 }
 
 enum {
